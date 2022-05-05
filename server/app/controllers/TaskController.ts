@@ -9,12 +9,18 @@ class TaskController implements IController {
 
     constructor(private taskService: TaskService) {
         this.router.get("", this.getTasks);
+        this.router.post("", this.createTask);
     }
 
     getTasks = (request: express.Request, response: express.Response) => {
         response.send(this.taskService.getTasks())
     }
 
+    createTask = (request: express.Request, response: express.Response) => {
+        const {name, description} = request.body;
+        response.send(this.taskService.createTask(name, description))
+
+    }
 }
 
 export default TaskController;

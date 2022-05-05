@@ -37,10 +37,7 @@ class TaskController {
             response.send(this.taskService.createTask(name, description));
         };
         this.router.get("", this.getTasks);
+        this.router.post("", this.createTask);
     }
 }
 exports.default = TaskController;
-//post para crear una tarea
-//get para traerme todas las tareas
-//put para actualizar una tarea
-//delete para eliminar la tarea

@@ -8,4 +8,9 @@ export default class TaskService{
         return this.taskRepository.getTasks()
     }
 
+    createTask(name: string, description: string): Task {
+        let tarea = new Task(Math.random(), name, description);
+        this.taskRepository.saveTask(tarea);
+        return tarea;
+    }
 }

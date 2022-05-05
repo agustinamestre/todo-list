@@ -10,5 +10,7 @@ export default class TaskRepository {
         return this.tasks
     }
 
+    saveTask(task: Task) {
+       this.tasks.push(task);
+    }
 }
-
