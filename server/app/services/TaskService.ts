@@ -13,4 +13,8 @@ export default class TaskService{
         this.taskRepository.saveTask(tarea);
         return tarea;
     }
+
+    deleteTask(id: number)  {
+        this.taskRepository.deleteTask(id);
+    }
 }

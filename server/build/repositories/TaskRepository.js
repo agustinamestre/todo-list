@@ -16,5 +16,13 @@ class TaskRepository {
     saveTask(task) {
         this.tasks.push(task);
     }
+    deleteTask(id) {
+        const indexTareaAEliminar = this.tasks.findIndex(e => e.id === id);
+        console.log(indexTareaAEliminar);
+        this.tasks.splice(indexTareaAEliminar, 1);
+    }
+    updateTask(id, name, description) {
+        const indexTareaAActualizar = this.tasks.findIndex(e => e.id === id);
+    }
 }
 exports.default = TaskRepository;

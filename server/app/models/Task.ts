@@ -1,6 +1,6 @@
 export default class Task {
     constructor(
-        private readonly id: number,
+        public readonly id: number,
         private readonly name: string,
         private readonly description: string,
         private readonly createdAt: Date= new Date(),

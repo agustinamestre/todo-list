@@ -16,5 +16,11 @@ class TaskService {
         this.taskRepository.saveTask(tarea);
         return tarea;
     }
+    deleteTask(id) {
+        this.taskRepository.deleteTask(id);
+    }
+    updateTask(id, name, description) {
+        this.taskRepository.updateTask(id, name, description);
+    }
 }
 exports.default = TaskService;
