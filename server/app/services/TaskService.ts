@@ -17,4 +17,8 @@ export default class TaskService{
     deleteTask(id: number)  {
         this.taskRepository.deleteTask(id);
     }
+
+    updateTask(id: number, name: string, description: string){
+        this.taskRepository.updateTask(id, name, description)
+    }
 }

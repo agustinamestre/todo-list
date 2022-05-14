@@ -48,7 +48,7 @@ class TaskController {
         this.router.get("", this.getTasks);
         this.router.post("", this.createTask);
         this.router.delete("/:id", this.deleteTask);
-        this.router.put("", this.deleteTask);
+        this.router.put("/:id", this.updateTask);
     }
 }
 exports.default = TaskController;

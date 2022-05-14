@@ -11,6 +11,7 @@ class TaskController implements IController {
         this.router.get("", this.getTasks);
         this.router.post("", this.createTask);
         this.router.delete("/:id", this.deleteTask);
+        this.router.put("/:id", this.updateTask);
     }
 
     getTasks = (request: express.Request, response: express.Response) => {
@@ -25,6 +26,12 @@ class TaskController implements IController {
     deleteTask = (request: express.Request, response: express.Response) => {
         const id = +request.params.id;
         response.send(this.taskService.deleteTask(id))
+    }
+
+    updateTask = (request:  express.Request, response: express.Response) => {
+        const id = +request.params.id;
+        const {name, description} = request.body;
+        response.send(this.taskService.updateTask(id, name, description))
     }
 }
 

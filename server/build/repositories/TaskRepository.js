@@ -7,7 +7,10 @@ const Task_1 = __importDefault(require("../models/Task"));
 class TaskRepository {
     constructor() {
         this.tasks = [
-            new Task_1.default(1, 'orden', 'sdfsdf', new Date(), new Date())
+            new Task_1.default(0, 'Limpieza', 'limpiar habitacion', new Date(), new Date()),
+            new Task_1.default(1, 'Estudio', 'Estudiar JavaScript', new Date(), new Date()),
+            new Task_1.default(2, 'Ejercicio', 'Ir la gimnasio', new Date(), new Date()),
+            new Task_1.default(3, 'Trabajar', 'Ir a la panderia', new Date(), new Date())
         ];
     }
     getTasks() {
@@ -18,11 +21,12 @@ class TaskRepository {
     }
     deleteTask(id) {
         const indexTareaAEliminar = this.tasks.findIndex(e => e.id === id);
-        console.log(indexTareaAEliminar);
         this.tasks.splice(indexTareaAEliminar, 1);
     }
     updateTask(id, name, description) {
         const indexTareaAActualizar = this.tasks.findIndex(e => e.id === id);
+        this.tasks[indexTareaAActualizar].name = name;
+        this.tasks[indexTareaAActualizar].description = description;
     }
 }
 exports.default = TaskRepository;

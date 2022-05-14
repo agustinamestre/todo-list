@@ -19,7 +19,12 @@ export default class TaskRepository {
 
     deleteTask(id: number){
        const indexTareaAEliminar =  this.tasks.findIndex(e => e.id === id)
-       console.log(indexTareaAEliminar)
        this.tasks.splice(indexTareaAEliminar, 1);
     }
-}
+
+    updateTask(id: number, name: string, description: string){
+      const indexTareaAActualizar =  this.tasks.findIndex(e => e.id === id)
+      this.tasks[indexTareaAActualizar].name = name;
+      this.tasks[indexTareaAActualizar].description = description;
+    }
+} 
