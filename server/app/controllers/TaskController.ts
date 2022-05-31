@@ -4,7 +4,7 @@ import IController from "./IController";
 
 class TaskController implements IController {
     
-    public readonly path = '/tasks';
+    public readonly path = "/tasks";
     public readonly router = express.Router();
 
     constructor(private taskService: TaskService) {
@@ -15,24 +15,24 @@ class TaskController implements IController {
     }
 
     getTasks = (request: express.Request, response: express.Response) => {
-        response.send(this.taskService.getTasks())
-    }
+        response.send(this.taskService.getTasks());
+    };
 
     createTask = (request: express.Request, response: express.Response) => {
         const {name, description} = request.body;
-        response.send(this.taskService.createTask(name, description))
-    }
+        response.send(this.taskService.createTask(name, description));
+    };
 
     deleteTask = (request: express.Request, response: express.Response) => {
         const id = +request.params.id;
-        response.send(this.taskService.deleteTask(id))
-    }
+        response.send(this.taskService.deleteTask(id));
+    };
 
     updateTask = (request:  express.Request, response: express.Response) => {
         const id = +request.params.id;
         const {name, description} = request.body;
-        response.send(this.taskService.updateTask(id, name, description))
-    }
+        response.send(this.taskService.updateTask(id, name, description));
+    };
 }
 
 export default TaskController;

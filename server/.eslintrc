@@ -1,0 +1,32 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier/@typescript-eslint",  // agrega las reglas de prettier a eslint
+      "plugin:prettier/recommended", // agregar el plugin que integra eslint con prettier
+      "plugin:react/recommended" // agregar el plugin de reactjs para eslint
+
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+          "jsx": true // permite a eslint analizar los archivos jsx o tsx
+        }
+      },
+    "rules": {
+        "quotes": ["error", "double"],
+        "semi": ["error", "always"],
+        "@typescript-eslint/no-explicit-any": ["error", {  "fixToUnknown": true}],
+        "curly": "error"
+    }  ,
+    "settings": {
+        "react": {
+          "version": "detect" // para detectar la versión de reactjs
+        }
+      } 
+  }

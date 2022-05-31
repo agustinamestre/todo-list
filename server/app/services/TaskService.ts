@@ -5,11 +5,11 @@ export default class TaskService{
     constructor(private taskRepository: TaskRepository) {}
 
     getTasks(): Task[] {
-        return this.taskRepository.getTasks()
+        return this.taskRepository.getTasks();
     }
 
     createTask(name: string, description: string): Task {
-        let tarea = new Task(Math.random(), name, description);
+        const tarea = new Task(Math.random(), name, description);
         this.taskRepository.saveTask(tarea);
         return tarea;
     }
@@ -19,6 +19,6 @@ export default class TaskService{
     }
 
     updateTask(id: number, name: string, description: string){
-        this.taskRepository.updateTask(id, name, description)
+        this.taskRepository.updateTask(id, name, description);
     }
 }

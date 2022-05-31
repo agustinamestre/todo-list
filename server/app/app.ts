@@ -1,7 +1,7 @@
-import express = require('express');
-import TaskController from './controllers/TaskController';
-import TaskRepository from './repositories/TaskRepository';
-import TaskService from './services/TaskService';
+import express = require("express");
+import TaskController from "./controllers/TaskController";
+import TaskRepository from "./repositories/TaskRepository";
+import TaskService from "./services/TaskService";
 
 const app  = express();
 const controller = new TaskController(
@@ -10,8 +10,8 @@ const controller = new TaskController(
 
 app.use(express.json());
 
-app.use(controller.path, controller.router)
+app.use(controller.path, controller.router);
 
 app.listen(3000, () =>{
-    console.log('app listening on port 3000')
-})
+    console.log("app listening on port 3000");
+});
