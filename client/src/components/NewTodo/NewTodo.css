@@ -1,0 +1,12 @@
+#container-newTodo{
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 3px;
+      margin: 2px;
+}
+
+/* #container-newTodo:hover{
+      background-color: lightgray;
+      transition: background-color .5s;
+} */

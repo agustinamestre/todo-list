@@ -1,0 +1,13 @@
+#container-task {
+    display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3px;
+      margin: 2px;
+      border: 1px solid black;
+
+}
+
+/* #EditIcon:hover{
+  
+} */
