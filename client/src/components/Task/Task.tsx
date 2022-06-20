@@ -10,7 +10,7 @@ interface TaskProps {
 }
 
 export default function Task(props: TaskProps) {
-  const {id, value} = props.task
+  const {value} = props.task
 
   return (
     <div id="container-task">

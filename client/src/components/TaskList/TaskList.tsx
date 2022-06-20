@@ -11,19 +11,3 @@ export default function TaskList (props: {taskArray: TaskModel[]}) {
         </div>
     )
 }
-
-/*
-
-const props = {
-    persons: Person[]
-}
-
-<PersonListComponent persons={myPersonList}/>
-
-export const PersonListComponent = (props:{persons: Person[]}) => {}
-
-
-<PersonComponent name={}/>
- 
-export const PersonComponent  = (props: {name: string, lastName: string, age?: number}) => {}
-*/

@@ -1,0 +1,14 @@
+#taskName, #taskDescription{
+    padding-bottom: 10px;
+}
+
+#cancel{
+    display:inline;
+    padding: 20px;
+    margin-left: 40px;
+}
+
+#create{
+    display:inline;
+    padding: 20px;
+}

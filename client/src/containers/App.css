@@ -15,3 +15,8 @@ html {
     width: 500px;
     margin:auto;
 }
+
+#newTask{
+    position: relative;
+    left: 450px;
+}
