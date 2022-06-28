@@ -10,7 +10,7 @@ interface TaskProps {
 }
 
 export default function Task(props: TaskProps) {
-  const {value} = props.task
+  const {name} = props.task
 
   return (
     <div id="container-task">
@@ -27,7 +27,7 @@ export default function Task(props: TaskProps) {
           width: 400
         }}
       >
-        {value}
+        {name}
       </Box>
       <EditIcon><svg data-testid="EditIcon" id="EditIcon"></svg> </EditIcon>
       <DeleteIcon><svg data-testid="DeleteIcon" id="DeleteIcon"></svg> </DeleteIcon>
