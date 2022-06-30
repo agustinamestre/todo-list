@@ -7,10 +7,16 @@ import TaskModel from "../../TaskModel";
 
 interface TaskProps {
   task: TaskModel
+  deleteTask: (id: string) => void
 }
 
 export default function Task(props: TaskProps) {
-  const {name} = props.task
+  const {name, id} = props.task
+
+  const deleteTask = () => {
+    props.deleteTask(id)
+    console.log(id)
+  }
 
   return (
     <div id="container-task">
@@ -30,7 +36,7 @@ export default function Task(props: TaskProps) {
         {name}
       </Box>
       <EditIcon><svg data-testid="EditIcon" id="EditIcon"></svg> </EditIcon>
-      <DeleteIcon><svg data-testid="DeleteIcon" id="DeleteIcon"></svg> </DeleteIcon>
+      <DeleteIcon onClick={deleteTask}><svg data-testid="DeleteIcon" id="DeleteIcon" ></svg> </DeleteIcon>
     </div>
   );
 }

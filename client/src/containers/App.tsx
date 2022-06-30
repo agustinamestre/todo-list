@@ -27,12 +27,17 @@ function App() {
     setTasks([...tasks, {id, name, description}])
   }
 
+     const handleDeleteTask = (id: string) => {
+       let newArrayTasks =  tasks.filter((task) => task.id !== id)
+       setTasks(newArrayTasks)
+   }
+
   return (
     <div id="container-app" >
       <CssBaseline />
       <Typography variant="h1" align="center" id="title">Todo List</Typography>
       <AddCircleOutlineIcon  id="newTask" onClick={() => setOpen(true)} fontSize="large"> <svg data-testid="AddCircleOutlineIcon"> </svg> </AddCircleOutlineIcon>
-      <TaskList taskArray={tasks} />
+      <TaskList taskArray={tasks} deleteTask= {handleDeleteTask} />
       <ModalTask isModalOpen={open}  onModalClose={handleModalClose} handleCreate={handleCreateTask} />
     </div>
   )
