@@ -3,22 +3,28 @@ import TaskModel from "../../TaskModel";
 import Task from "../Task/Task";
 
 interface TaskProps {
-    taskArray: TaskModel[]
-    deleteTask: (id: string) => void
-  }
+  taskArray: TaskModel[];
+  deleteTask: (id: string) => void;
+  editTask: (task: TaskModel) => void;
+}
 
-export default function TaskList (props: TaskProps) {
+export default function TaskList(props: TaskProps) {
+  const deleteTask = (id: string) => {
+    props.deleteTask(id);
+  };
 
-   const deleteTask = (id: string) => {
-        props.deleteTask(id)
-   }
+  const editTask = (task: TaskModel) => {
+    props.editTask(task);
+  };
 
+  const tasksArray = props.taskArray.map((elem: TaskModel) => (
+    <Task
+      key={elem.id}
+      task={elem}
+      deleteTask={deleteTask}
+      editTask={editTask}
+    />
+  ));
 
-    const tasksArray = props.taskArray.map((elem: TaskModel) => <Task key={elem.id} task={elem} deleteTask= {deleteTask}/>)
-
-    return(
-        <div>
-            {tasksArray}
-        </div>
-    )
+  return <div>{tasksArray}</div>;
 }
