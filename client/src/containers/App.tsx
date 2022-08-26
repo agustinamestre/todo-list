@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { Typography } from "@material-ui/core";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -24,6 +24,7 @@ function App() {
     },
   ]);
 
+
   const handleEditTask = (task: TaskModel) => {
     setOpen(true);
     setCurrentTask(task);
@@ -48,12 +49,10 @@ function App() {
     setTasks(newArrayTasks);
   };
 
-
   const modalOpen = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
 
-  
   return (
     <div id="container-app">
       <CssBaseline />

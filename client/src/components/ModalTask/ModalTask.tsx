@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,} from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
@@ -31,13 +31,18 @@ interface ModalProps {
 export default function ModalTask(props: ModalProps) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [buttonName, setButtonName] = useState("Create");
+  const [buttonName, setButtonName] = useState("");
 
   useEffect(() => {
     if (props.isModalOpen) {
-      props.task === undefined
-        ? setButtonName("Create")
-        : setButtonName("Edit");
+      if(props.task === undefined){
+        setButtonName("Create")
+      }else{
+        setButtonName("Edit")
+        setName(props.task.name)
+        setDescription(props.task.description)
+      }
+
     }
   }, [props.isModalOpen, props.task]);
 
@@ -47,8 +52,10 @@ export default function ModalTask(props: ModalProps) {
   };
 
   const handleNameChange = (event: InputEvent) => {
+    console.log("hola")
     let name = event.target.value;
     setName(name);
+    console.log(name)
   };
 
   const handleDescriptionChange = (event: InputEvent) => {
@@ -67,12 +74,7 @@ export default function ModalTask(props: ModalProps) {
     setDescription("");
   };
 
-  let valueName;
-  if (props.task?.name === undefined) {
-    valueName = "";
-  } else {
-    valueName = props.task.name;
-  }
+  
 
   return (
     <div>
@@ -90,9 +92,7 @@ export default function ModalTask(props: ModalProps) {
               variant="outlined"
               fullWidth
               autoFocus
-              // value={name}
-              value={valueName}
-              // value={props.task?.name ?? ""}
+              value={name}
               onChange={handleNameChange}
             />
           </div>
@@ -102,7 +102,6 @@ export default function ModalTask(props: ModalProps) {
               placeholder="Description"
               multiline
               fullWidth
-              // value={props.task?.description ?? ""}
               value={description}
               onChange={handleDescriptionChange}
             />
