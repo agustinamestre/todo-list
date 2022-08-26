@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import "./App.css";
 import { Typography } from "@material-ui/core";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -24,6 +24,11 @@ function App() {
     },
   ]);
 
+  const handleEditTask = (task: TaskModel) => {
+    setOpen(true);
+    setCurrentTask(task);
+  };
+
   const handleModalClose = () => {
     setOpen(false);
     setCurrentTask(undefined);
@@ -35,7 +40,6 @@ function App() {
     } else {
       let newArray = [...tasks, { id, name, description }];
       setTasks(newArray);
-      console.log(newArray)
     }
   };
 
@@ -44,11 +48,12 @@ function App() {
     setTasks(newArrayTasks);
   };
 
-  const handleEditTask = (task: TaskModel) => {
-    setOpen(true);
-    setCurrentTask(task);
-  };
 
+  const modalOpen = () => {
+    setOpen(true)
+  }
+
+  
   return (
     <div id="container-app">
       <CssBaseline />
@@ -57,7 +62,7 @@ function App() {
       </Typography>
       <AddCircleOutlineIcon
         id="newTask"
-        onClick={() => setOpen(true)}
+        onClick={() => modalOpen()}
         fontSize="large"
       >
         {" "}

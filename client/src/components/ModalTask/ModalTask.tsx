@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
@@ -33,6 +33,14 @@ export default function ModalTask(props: ModalProps) {
   const [description, setDescription] = useState("");
   const [buttonName, setButtonName] = useState("Create");
 
+  useEffect(() => {
+    if (props.isModalOpen) {
+      props.task === undefined
+        ? setButtonName("Create")
+        : setButtonName("Edit");
+    }
+  }, [props.isModalOpen, props.task]);
+
   const handleClose = () => {
     props.onModalClose();
     clear();
@@ -59,6 +67,13 @@ export default function ModalTask(props: ModalProps) {
     setDescription("");
   };
 
+  let valueName;
+  if (props.task?.name === undefined) {
+    valueName = "";
+  } else {
+    valueName = props.task.name;
+  }
+
   return (
     <div>
       <Modal
@@ -75,7 +90,8 @@ export default function ModalTask(props: ModalProps) {
               variant="outlined"
               fullWidth
               autoFocus
-              value={name}
+              // value={name}
+              value={valueName}
               // value={props.task?.name ?? ""}
               onChange={handleNameChange}
             />

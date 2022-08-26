@@ -2,13 +2,13 @@ import * as React from "react";
 import TaskModel from "../../TaskModel";
 import Task from "../Task/Task";
 
-interface TaskProps {
+interface TaskListProps {
   taskArray: TaskModel[];
   deleteTask: (id: string) => void;
   editTask: (task: TaskModel) => void;
 }
 
-export default function TaskList(props: TaskProps) {
+export default function TaskList(props: TaskListProps) {
   const deleteTask = (id: string) => {
     props.deleteTask(id);
   };
