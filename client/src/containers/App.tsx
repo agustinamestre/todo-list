@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import { Typography } from "@material-ui/core";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -24,11 +24,12 @@ function App() {
     },
   ]);
 
+  useEffect(() => {
+    fetch("http://localhost:3000/tasks/")
+      .then((response) => response.json())
+      .then(tasks => setTasks(tasks));
+  }, []);
 
-  const handleEditTask = (task: TaskModel) => {
-    setOpen(true);
-    setCurrentTask(task);
-  };
 
   const handleModalClose = () => {
     setOpen(false);
@@ -42,6 +43,11 @@ function App() {
       let newArray = [...tasks, { id, name, description }];
       setTasks(newArray);
     }
+  };
+
+  const handleEditTask = (task: TaskModel) => {
+    setOpen(true);
+    setCurrentTask(task);
   };
 
   const handleDeleteTask = (id: string) => {

@@ -12,7 +12,7 @@ class TaskService {
         return this.taskRepository.getTasks();
     }
     createTask(name, description) {
-        let tarea = new Task_1.default(Math.random(), name, description);
+        const tarea = new Task_1.default(Math.random(), name, description);
         this.taskRepository.saveTask(tarea);
         return tarea;
     }

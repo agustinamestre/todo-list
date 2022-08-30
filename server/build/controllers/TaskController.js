@@ -27,7 +27,7 @@ const express = __importStar(require("express"));
 class TaskController {
     constructor(taskService) {
         this.taskService = taskService;
-        this.path = '/tasks';
+        this.path = "/tasks";
         this.router = express.Router();
         this.getTasks = (request, response) => {
             response.send(this.taskService.getTasks());

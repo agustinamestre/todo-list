@@ -7,10 +7,10 @@ const Task_1 = __importDefault(require("../models/Task"));
 class TaskRepository {
     constructor() {
         this.tasks = [
-            new Task_1.default(0, 'Limpieza', 'limpiar habitacion', new Date(), new Date()),
-            new Task_1.default(1, 'Estudio', 'Estudiar JavaScript', new Date(), new Date()),
-            new Task_1.default(2, 'Ejercicio', 'Ir la gimnasio', new Date(), new Date()),
-            new Task_1.default(3, 'Trabajar', 'Ir a la panderia', new Date(), new Date())
+            new Task_1.default(0, "Limpieza", "limpiar habitacion", new Date(), new Date()),
+            new Task_1.default(1, "Estudio", "Estudiar JavaScript", new Date(), new Date()),
+            new Task_1.default(2, "Ejercicio", "Ir la gimnasio", new Date(), new Date()),
+            new Task_1.default(3, "Trabajar", "Ir a la panderia", new Date(), new Date())
         ];
     }
     getTasks() {

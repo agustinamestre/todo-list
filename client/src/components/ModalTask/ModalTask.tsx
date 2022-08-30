@@ -1,4 +1,4 @@
-import React, { useState, useEffect,} from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
@@ -35,14 +35,13 @@ export default function ModalTask(props: ModalProps) {
 
   useEffect(() => {
     if (props.isModalOpen) {
-      if(props.task === undefined){
-        setButtonName("Create")
-      }else{
-        setButtonName("Edit")
-        setName(props.task.name)
-        setDescription(props.task.description)
+      if (props.task === undefined) {
+        setButtonName("Create");
+      } else {
+        setButtonName("Edit");
+        setName(props.task.name);
+        setDescription(props.task.description);
       }
-
     }
   }, [props.isModalOpen, props.task]);
 
@@ -52,10 +51,8 @@ export default function ModalTask(props: ModalProps) {
   };
 
   const handleNameChange = (event: InputEvent) => {
-    console.log("hola")
     let name = event.target.value;
     setName(name);
-    console.log(name)
   };
 
   const handleDescriptionChange = (event: InputEvent) => {
@@ -74,7 +71,13 @@ export default function ModalTask(props: ModalProps) {
     setDescription("");
   };
 
-  
+  const CreateOrEdit = () => {
+    if (buttonName === "Create") {
+      handleCreate();
+    } else {
+      //aca se llamaria a la funcion edit
+    }
+  };
 
   return (
     <div>
@@ -112,7 +115,7 @@ export default function ModalTask(props: ModalProps) {
             </Button>
           </div>
           <div id="create">
-            <Button variant="outlined" onClick={handleCreate}>
+            <Button variant="outlined" onClick={CreateOrEdit}>
               {buttonName}
             </Button>
           </div>
