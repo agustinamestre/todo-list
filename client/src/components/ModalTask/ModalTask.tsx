@@ -5,7 +5,6 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import "./ModalTask.css";
 import TaskModel from "../../TaskModel";
-import { v4 as uuid } from "uuid";
 
 const style = {
   position: "absolute" as "absolute",
@@ -24,7 +23,7 @@ type InputEvent = React.ChangeEvent<HTMLInputElement>;
 interface ModalProps {
   isModalOpen: boolean;
   onModalClose: () => void;
-  handleCreate: (id: string, taskName: string, taskDescription: string) => void;
+  handleTask: (taskName: string, taskDescription: string) => void;
   task?: TaskModel;
 }
 
@@ -60,8 +59,8 @@ export default function ModalTask(props: ModalProps) {
     setDescription(description);
   };
 
-  const handleCreate = () => {
-    props.handleCreate(uuid(), name, description);
+  const handleTask = () => {
+    props.handleTask(name, description);
     props.onModalClose();
     clear();
   };
@@ -69,14 +68,6 @@ export default function ModalTask(props: ModalProps) {
   const clear = () => {
     setName("");
     setDescription("");
-  };
-
-  const CreateOrEdit = () => {
-    if (buttonName === "Create") {
-      handleCreate();
-    } else {
-      //aca se llamaria a la funcion edit
-    }
   };
 
   return (
@@ -115,7 +106,7 @@ export default function ModalTask(props: ModalProps) {
             </Button>
           </div>
           <div id="create">
-            <Button variant="outlined" onClick={CreateOrEdit}>
+            <Button variant="outlined" onClick={handleTask}>
               {buttonName}
             </Button>
           </div>

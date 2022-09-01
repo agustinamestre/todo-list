@@ -16,7 +16,7 @@ export default function Task(props: TaskProps) {
   const { name, id, } = props.task;
 
   const deleteTask = () => {
-    props.deleteTask(id);
+    props.deleteTask(id!);
   };
 
   const editTask = () => {

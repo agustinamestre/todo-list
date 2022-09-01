@@ -24,24 +24,42 @@ function App() {
     },
   ]);
 
+  //ACA MUESTRO LAS TAREAS DEL SERVER EN EL FRONT :)
   useEffect(() => {
     fetch("http://localhost:3000/tasks/")
       .then((response) => response.json())
-      .then(tasks => setTasks(tasks));
+      .then((tasks) => setTasks(tasks))
   }, []);
-
 
   const handleModalClose = () => {
     setOpen(false);
     setCurrentTask(undefined);
   };
 
-  const handleCreateTask = (id: string, name: string, description: string) => {
+  const handleTask = (name: string, description: string) => {
     if (name === "") {
       setOpen(false);
     } else {
-      let newArray = [...tasks, { id, name, description }];
-      setTasks(newArray);
+      if (currentTask === undefined) {
+        fetch("http://localhost:3000/tasks/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: name,
+            description: description,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data) {
+              let newArray = [...tasks, data];
+              setTasks(newArray);
+            }
+          });
+
+      } else {
+        //aca la logica del update
+      }
     }
   };
 
@@ -51,8 +69,18 @@ function App() {
   };
 
   const handleDeleteTask = (id: string) => {
-    let newArrayTasks = tasks.filter((task) => task.id !== id);
-    setTasks(newArrayTasks);
+    // fetch(`http://localhost:3000/tasks/${id}`, {
+    //   method: "DELETE",
+    // }).then((data) => {
+    //   if (data) {
+    //     let newArrayTasks = tasks.filter((task) => task.id !== id);
+    //     setTasks(newArrayTasks);
+    //     console.log(newArrayTasks);
+    //   }
+    // });
+
+    // let newArrayTasks = tasks.filter((task) => task.id !== id);
+    // setTasks(newArrayTasks);
   };
 
   const modalOpen = () => {
@@ -81,7 +109,7 @@ function App() {
       <ModalTask
         isModalOpen={open}
         onModalClose={handleModalClose}
-        handleCreate={handleCreateTask}
+        handleTask={handleTask}
         task={currentTask}
       />
     </div>
