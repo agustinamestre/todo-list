@@ -9,7 +9,7 @@ class TaskRepository {
         this.tasks = [
             new Task_1.default(0, "Limpieza", "limpiar habitacion", new Date(), new Date()),
             new Task_1.default(1, "Estudio", "Estudiar JavaScript", new Date(), new Date()),
-            new Task_1.default(2, "Ejercicio", "Ir la gimnasio", new Date(), new Date())
+            new Task_1.default(2, "Ejercicio", "Ir la gimnasio", new Date(), new Date()),
         ];
     }
     getTasks() {
@@ -17,15 +17,17 @@ class TaskRepository {
     }
     saveTask(task) {
         this.tasks.push(task);
+        return task;
     }
     deleteTask(id) {
-        const indexTareaAEliminar = this.tasks.findIndex(e => e.id === id);
+        const indexTareaAEliminar = this.tasks.findIndex((e) => e.id === id);
         this.tasks.splice(indexTareaAEliminar, 1);
     }
     updateTask(id, name, description) {
-        const indexTareaAActualizar = this.tasks.findIndex(e => e.id === id);
+        const indexTareaAActualizar = this.tasks.findIndex((e) => e.id === id);
         this.tasks[indexTareaAActualizar].name = name;
         this.tasks[indexTareaAActualizar].description = description;
+        return this.tasks[indexTareaAActualizar];
     }
 }
 exports.default = TaskRepository;

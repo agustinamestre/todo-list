@@ -1,5 +1,5 @@
 import React from "react";
-import { Checkbox, Box } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import "./Task.css";
@@ -7,7 +7,7 @@ import TaskModel from "../../TaskModel";
 
 interface TaskProps {
   task: TaskModel;
-  deleteTask: (id: string) => void;
+  deleteTask: (id: number) => void;
   editTask: (task: TaskModel) => void;
 }
 
@@ -23,9 +23,10 @@ export default function Task(props: TaskProps) {
     props.editTask(props.task);
   };
 
+ 
+
   return (
     <div id="container-task">
-      <Checkbox />
       <Box
         id="taskName"
         component="div"

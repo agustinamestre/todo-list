@@ -5,7 +5,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TaskList from "../components/TaskList/TaskList";
 import ModalTask from "../components/ModalTask/ModalTask";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { v4 as uuid } from "uuid";
 import TaskModel from "../TaskModel";
 
 function App() {
@@ -13,14 +12,9 @@ function App() {
   const [open, setOpen] = useState(false);
   const [tasks, setTasks] = useState([
     {
-      id: uuid(),
+      id: 0,
       name: "Practicar react",
       description: "avanzar con la todo list",
-    },
-    {
-      id: uuid(),
-      name: "Hacer ejercicio",
-      description: "ir a spinning y hacer abdominales",
     },
   ]);
 
@@ -28,13 +22,8 @@ function App() {
   useEffect(() => {
     fetch("http://localhost:3000/tasks/")
       .then((response) => response.json())
-      .then((tasks) => setTasks(tasks))
+      .then((tasks) => setTasks(tasks));
   }, []);
-
-  const handleModalClose = () => {
-    setOpen(false);
-    setCurrentTask(undefined);
-  };
 
   const handleTask = (name: string, description: string) => {
     if (name === "") {
@@ -56,9 +45,29 @@ function App() {
               setTasks(newArray);
             }
           });
-
       } else {
-        //aca la logica del update
+        let id = currentTask.id;
+        fetch(`http://localhost:3000/tasks/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            name: name,
+            description: description,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data) {
+              let newArray = [...tasks];
+              const index = tasks.findIndex((e) => e.id === id);
+              newArray[index].name = name;
+              newArray[index].description = description;
+              setTasks(newArray);
+            }
+          });
       }
     }
   };
@@ -68,19 +77,20 @@ function App() {
     setCurrentTask(task);
   };
 
-  const handleDeleteTask = (id: string) => {
-    // fetch(`http://localhost:3000/tasks/${id}`, {
-    //   method: "DELETE",
-    // }).then((data) => {
-    //   if (data) {
-    //     let newArrayTasks = tasks.filter((task) => task.id !== id);
-    //     setTasks(newArrayTasks);
-    //     console.log(newArrayTasks);
-    //   }
-    // });
+  const handleDeleteTask = (id: number) => {
+    fetch(`http://localhost:3000/tasks/${id}`, {
+      method: "DELETE",
+    }).then((data) => {
+      if (data) {
+        let newArrayTasks = tasks.filter((task) => task.id !== id);
+        setTasks(newArrayTasks);
+      }
+    });
+  };
 
-    // let newArrayTasks = tasks.filter((task) => task.id !== id);
-    // setTasks(newArrayTasks);
+  const handleModalClose = () => {
+    setOpen(false);
+    setCurrentTask(undefined);
   };
 
   const modalOpen = () => {

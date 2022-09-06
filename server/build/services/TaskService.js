@@ -20,7 +20,7 @@ class TaskService {
         this.taskRepository.deleteTask(id);
     }
     updateTask(id, name, description) {
-        this.taskRepository.updateTask(id, name, description);
+        return this.taskRepository.updateTask(id, name, description);
     }
 }
 exports.default = TaskService;
