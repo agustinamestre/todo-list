@@ -6,11 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const cors = require("cors");
 const TaskController_1 = __importDefault(require("./controllers/TaskController"));
-const TaskRepository_1 = __importDefault(require("./repositories/TaskRepository"));
+const InMemoryTaskRepository_1 = __importDefault(require("./repositories/InMemoryTaskRepository"));
 const TaskService_1 = __importDefault(require("./services/TaskService"));
 const app = express();
 app.use(cors());
-const controller = new TaskController_1.default(new TaskService_1.default(new TaskRepository_1.default()));
+const controller = new TaskController_1.default(new TaskService_1.default(new InMemoryTaskRepository_1.default()));
 app.use(express.json());
 app.use(controller.path, controller.router);
 app.listen(3000, () => {

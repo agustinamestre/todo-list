@@ -1,12 +1,14 @@
 import express = require("express");
 const cors = require("cors");
 import TaskController from "./controllers/TaskController";
-import TaskRepository from "./repositories/TaskRepository";
+import InMemoryTaskRepository from "./repositories/InMemoryTaskRepository";
 import TaskService from "./services/TaskService";
 
 const app = express();
 app.use(cors());
-const controller = new TaskController(new TaskService(new TaskRepository()));
+const controller = new TaskController(
+  new TaskService(new InMemoryTaskRepository())
+);
 
 app.use(express.json());
 

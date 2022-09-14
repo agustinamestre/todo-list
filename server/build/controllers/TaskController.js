@@ -22,6 +22,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = __importStar(require("express"));
 class TaskController {
@@ -29,22 +38,22 @@ class TaskController {
         this.taskService = taskService;
         this.path = "/tasks";
         this.router = express.Router();
-        this.getTasks = (request, response) => {
-            response.send(this.taskService.getTasks());
-        };
-        this.createTask = (request, response) => {
+        this.getTasks = (request, response) => __awaiter(this, void 0, void 0, function* () {
+            response.send(yield this.taskService.getTasks());
+        });
+        this.createTask = (request, response) => __awaiter(this, void 0, void 0, function* () {
             const { name, description } = request.body;
-            response.send(this.taskService.createTask(name, description));
-        };
-        this.deleteTask = (request, response) => {
+            response.send(yield this.taskService.createTask(name, description));
+        });
+        this.deleteTask = (request, response) => __awaiter(this, void 0, void 0, function* () {
             const id = +request.params.id;
-            response.send(this.taskService.deleteTask(id));
-        };
-        this.updateTask = (request, response) => {
+            response.send(yield this.taskService.deleteTask(id));
+        });
+        this.updateTask = (request, response) => __awaiter(this, void 0, void 0, function* () {
             const id = +request.params.id;
             const { name, description } = request.body;
-            response.send(this.taskService.updateTask(id, name, description));
-        };
+            response.send(yield this.taskService.updateTask(id, name, description));
+        });
         this.router.get("", this.getTasks);
         this.router.post("", this.createTask);
         this.router.delete("/:id", this.deleteTask);

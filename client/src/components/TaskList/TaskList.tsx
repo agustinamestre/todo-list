@@ -17,8 +17,6 @@ export default function TaskList(props: TaskListProps) {
     props.editTask(task);
   };
 
-  
-
   const tasksArray = props.taskArray.map((elem: TaskModel) => (
     <Task
       key={elem.id}

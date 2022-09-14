@@ -4,21 +4,21 @@ import TaskRepository from "../repositories/TaskRepository";
 export default class TaskService {
   constructor(private taskRepository: TaskRepository) {}
 
-  getTasks(): Task[] {
-    return this.taskRepository.getTasks();
+  async getTasks() {
+    return await this.taskRepository.getTasks();
   }
 
-  createTask(name: string, description: string): Task {
-    const tarea = new Task(Math.random(), name, description);
-    this.taskRepository.saveTask(tarea);
-    return tarea;
+  async createTask(name: string, description: string) {
+    const task = new Task(Math.random(), name, description);
+    await this.taskRepository.saveTask(task);
+    return task;
   }
 
-  deleteTask(id: number) {
-    this.taskRepository.deleteTask(id);
+  async deleteTask(id: number) {
+    await this.taskRepository.deleteTask(id);
   }
 
-  updateTask(id: number, name: string, description: string): Task {
-    return this.taskRepository.updateTask(id, name, description);
+  async updateTask(id: number, name: string, description: string) {
+    return await this.taskRepository.updateTask(id, name, description);
   }
 }

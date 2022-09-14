@@ -23,8 +23,7 @@ export default function Task(props: TaskProps) {
     props.editTask(props.task);
   };
 
- 
-
+  
   return (
     <div id="container-task">
       <Box
