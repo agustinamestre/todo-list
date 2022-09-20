@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Task_1 = __importDefault(require("../models/Task"));
+let database = require("../knex");
 class InMemoryTaskRepository {
     constructor() {
         this.tasks = [
@@ -13,22 +14,31 @@ class InMemoryTaskRepository {
         ];
     }
     getTasks() {
-        return Promise.resolve(this.tasks);
+        return Promise.resolve(database.postgres.select("*").from("tasks"));
     }
     saveTask(task) {
-        this.tasks.push(task);
-        return Promise.resolve(task);
+        const { name, description } = task;
+        const createTask = database.postgres("tasks").returning("*").insert({
+            name: name,
+            description: description,
+        });
+        return Promise.resolve(createTask);
     }
     deleteTask(id) {
-        const indexTareaAEliminar = this.tasks.findIndex((e) => e.id === id);
-        this.tasks.splice(indexTareaAEliminar, 1);
-        return Promise.resolve();
+        const deleteTaskById = database.postgres("tasks").where({ id }).del();
+        return Promise.resolve(deleteTaskById);
     }
     updateTask(id, name, description) {
-        const indexTareaAActualizar = this.tasks.findIndex((e) => e.id === id);
-        this.tasks[indexTareaAActualizar].name = name;
-        this.tasks[indexTareaAActualizar].description = description;
-        return Promise.resolve(this.tasks[indexTareaAActualizar]);
+        // const updateTaskDB = database
+        //   .postgres("tasks")
+        //   .returning("*")
+        //   .update({
+        //     name: name,
+        //     description: description,
+        //   })
+        //   .where({ id });
+        const updateTaskDB = database.postgres.raw(`update tasks set name = ? description = ? updatedat = ? where id = ? returning *`, [name, description, Date.now, id]);
+        return Promise.resolve(updateTaskDB);
     }
 }
 exports.default = InMemoryTaskRepository;

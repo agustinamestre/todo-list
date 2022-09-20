@@ -1,8 +1,6 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.db = void 0;
 const knex = require("knex");
-exports.db = knex({
+exports.postgres = knex({
     client: "pg",
     connection: {
         host: "127.0.0.1",

@@ -1,6 +1,6 @@
 import Task from "../models/Task";
 import TaskRepository from "./TaskRepository";
-import knex from "knex";
+let database = require("../knex");
 
 export default class InMemoryTaskRepository implements TaskRepository {
   private readonly tasks = [
@@ -10,24 +10,38 @@ export default class InMemoryTaskRepository implements TaskRepository {
   ];
 
   getTasks(): Promise<Task[]> {
-    return Promise.resolve(this.tasks);
+    return Promise.resolve(database.postgres.select("*").from("tasks"));
   }
 
   saveTask(task: Task): Promise<Task> {
-    this.tasks.push(task);
-    return Promise.resolve(task);
+    const { name, description } = task;
+    const createTask = database.postgres("tasks").returning("*").insert({
+      name: name,
+      description: description,
+    });
+    return Promise.resolve(createTask);
   }
 
   deleteTask(id: number): Promise<void> {
-    const indexTareaAEliminar = this.tasks.findIndex((e) => e.id === id);
-    this.tasks.splice(indexTareaAEliminar, 1);
-    return Promise.resolve();
+    const deleteTaskById = database.postgres("tasks").where({ id }).del();
+    return Promise.resolve(deleteTaskById);
   }
 
   updateTask(id: number, name: string, description: string): Promise<Task> {
-    const indexTareaAActualizar = this.tasks.findIndex((e) => e.id === id);
-    this.tasks[indexTareaAActualizar].name = name;
-    this.tasks[indexTareaAActualizar].description = description;
-    return Promise.resolve(this.tasks[indexTareaAActualizar]);
+    const updateTaskDB = database
+      .postgres("tasks")
+      .returning("*")
+      .update({
+        name: name,
+        description: description,
+      })
+      .where({ id });
+
+    // const updateTaskDB = database.postgres.raw(
+    //   `update tasks set name = ? description = ? updatedat = ? where id = ? returning *`,
+    //   [name, description, Date.now, id]
+    // );
+
+    return Promise.resolve(updateTaskDB);
   }
 }
