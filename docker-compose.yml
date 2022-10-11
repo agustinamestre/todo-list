@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:14.5-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: todo_list
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@pgadmin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    depends_on:
+      - db
+    links:
+      - db
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+      args:
+        - DATABASE_URL=postgresql://postgres:postgres@db:5432/todo_list
+    image: todoserver
+    command: sh -c "npm install && npm install -g knex && knex migrate:latest --knexfile ./app/db/knexfile.js && knex seed:run --knexfile ./app/db/knexfile.js && npm start"
+    expose:
+      - ${APP_SERVER_PORT}
+    ports:
+      - "5000:5000"
+    environment:
+      API_HOST: ${API_HOST}
+      APP_SERVER_PORT: ${APP_SERVER_PORT}
+      NODE_ENV: development
+    depends_on:
+      - db
+
+  client:
+    build: ./client
+    image: todoclient
+    expose:
+      - ${REACT_APP_PORT}
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_PORT=${REACT_APP_PORT}
+    depends_on:
+      - server
+    links:
+      - server

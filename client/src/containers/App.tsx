@@ -7,8 +7,12 @@ import ModalTask from "../components/ModalTask/ModalTask";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import TaskModel from "../TaskModel";
 import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
+import Config from "../config.json";
+
 
 function App() {
+  const baseURL= Config.BASE_URL
+
   const [currentTask, setCurrentTask] = useState<TaskModel>();
   const [open, setOpen] = useState(false);
   const [tasks, setTasks] = useState([
@@ -19,16 +23,15 @@ function App() {
     },
   ]);
 
-  //ACA MUESTRO LAS TAREAS DEL SERVER EN EL FRONT :)
   useEffect(() => {
     try {
-      fetch("http://localhost:3000/tasks/")
+      fetch(`${baseURL}/tasks/`)
         .then((response) => response.json())
         .then((tasks) => setTasks(tasks));
     } catch (error) {
       console.error(error);
     }
-  }, []);
+  }, [baseURL]);
 
   const handleTask = (name: string, description: string) => {
     if (name === "") {
@@ -36,7 +39,7 @@ function App() {
     } else {
       if (currentTask === undefined) {
         try {
-          fetch("http://localhost:3000/tasks/", {
+          fetch(`${baseURL}/tasks/`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -57,7 +60,7 @@ function App() {
       } else {
         let id = currentTask.id;
         try {
-          fetch(`http://localhost:3000/tasks/${id}`, {
+          fetch(`${baseURL}/tasks/${id}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
@@ -92,7 +95,7 @@ function App() {
 
   const handleDeleteTask = (id: number) => {
     try {
-      fetch(`http://localhost:3000/tasks/${id}`, {
+      fetch(`${baseURL}/tasks/${id}`, {
         method: "DELETE",
       }).then((data) => {
         if (data) {

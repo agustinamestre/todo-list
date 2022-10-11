@@ -1,13 +1,19 @@
-# syntax=docker/dockerfile:1
-
 FROM node:18-alpine3.15
 
 WORKDIR /app
 
-COPY package.json /app
+COPY package.json ./
+
+COPY package-lock.json ./
+
+# set database connection string
+ARG DATABASE_URL
+ENV DATABASE_URL $DATABASE_URL
 
 RUN npm install
 
-COPY . /app
+COPY . .
+
+EXPOSE 5000
 
 CMD [ "npm", "start" ]
