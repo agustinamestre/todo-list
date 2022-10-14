@@ -9,7 +9,7 @@ export default class TaskService {
   }
 
   async createTask(name: string, description: string) {
-    const task = new Task(Math.random(), name, description);
+    const task = new Task(Math.floor(Math.random()*101), name, description);
     await this.taskRepository.saveTask(task);
     return task;
   }

@@ -7,23 +7,23 @@
   await knex("tasks").del();
   await knex("tasks").insert([
     {
-      id: 1,
-      name: "jjjj",
-      description: "jjjjj",
+      id: 111,
+      name: "Cleaning",
+      description: "bedroom and kitchen",
       created_at: new Date(),
       updated_at: new Date(),
     },
     {
-      id: 2,
-      name: "jjjj",
-      description: "jjjjj",
+      id: 222,
+      name: "Code",
+      description: "Finish ReactJs course",
       created_at: new Date(),
       updated_at: new Date(),
     },
     {
-      id: 3,
-      name: "jjjj",
-      description: "jjjjj",
+      id: 333,
+      name: "Exercice",
+      description: "Go for a run",
       created_at: new Date(),
       updated_at: new Date(),
     },

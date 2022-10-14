@@ -19,22 +19,22 @@ exports.seed = function (knex) {
         yield knex("tasks").insert([
             {
                 id: 1,
-                name: "jjjj",
-                description: "jjjjj",
+                name: "Cleaning",
+                description: "bedroom and kitchen",
                 created_at: new Date(),
                 updated_at: new Date(),
             },
             {
                 id: 2,
-                name: "jjjj",
-                description: "jjjjj",
+                name: "Code",
+                description: "Finish ReactJs course",
                 created_at: new Date(),
                 updated_at: new Date(),
             },
             {
                 id: 3,
-                name: "jjjj",
-                description: "jjjjj",
+                name: "Exercice",
+                description: "Go for a run",
                 created_at: new Date(),
                 updated_at: new Date(),
             },

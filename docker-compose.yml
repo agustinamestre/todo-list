@@ -11,20 +11,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: todo_list
 
-  pgadmin:
-    container_name: pgadmin_container
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: pgadmin@pgadmin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-    ports:
-      - "80:80"
-    restart: unless-stopped
-    depends_on:
-      - db
-    links:
-      - db
-
   server:
     build:
       context: ./server
@@ -57,3 +43,4 @@ services:
       - server
     links:
       - server
+
