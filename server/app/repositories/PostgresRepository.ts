@@ -3,6 +3,7 @@ import TaskRepository from "./TaskRepository";
 let database = require("../db/knex");
 
 export default class PostgresRepository implements TaskRepository {
+  
   getTasks(): Promise<Task[]> {
     return Promise.resolve(database.select("*").from("tasks"));
   }

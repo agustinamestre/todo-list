@@ -24,8 +24,15 @@ export default class InMemoryTaskRepository implements TaskRepository {
 
   updateTask(id: number, name: string, description: string): Promise<Task> {
     const index = this.tasks.findIndex((e) => e.id === id);
+
+    if(index === -1){
+      throw new Error(`No se encontro la tarea con id ${id}`)
+    }
+
     this.tasks[index].name = name;
     this.tasks[index].description = description;
     return Promise.resolve(this.tasks[index]);
+
+    return Promise.resolve(this.tasks[0])
   }
 }

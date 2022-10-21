@@ -5,7 +5,7 @@
  */
 exports.up = function (knex) {
     return knex.schema.createTable("tasks", function (table) {
-        table.increments("id").primary;
+        table.increments("id");
         table.string("name").notNullable();
         table.string("description");
         table.timestamp("created_at").defaultTo(knex.fn.now());

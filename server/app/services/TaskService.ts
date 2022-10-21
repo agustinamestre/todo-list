@@ -2,7 +2,7 @@ import Task from "../models/Task";
 import TaskRepository from "../repositories/TaskRepository";
 
 export default class TaskService {
-  constructor(private taskRepository: TaskRepository) {}
+  constructor(private readonly taskRepository: TaskRepository) {}
 
   async getTasks() {
     return await this.taskRepository.getTasks();

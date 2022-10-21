@@ -24,7 +24,7 @@ class TaskService {
     }
     createTask(name, description) {
         return __awaiter(this, void 0, void 0, function* () {
-            const task = new Task_1.default(Math.random(), name, description);
+            const task = new Task_1.default(Math.floor(Math.random() * 101), name, description);
             yield this.taskRepository.saveTask(task);
             return task;
         });
