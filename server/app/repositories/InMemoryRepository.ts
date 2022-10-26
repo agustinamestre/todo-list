@@ -12,8 +12,10 @@ export default class InMemoryTaskRepository implements TaskRepository {
   }
 
   saveTask(task: Task): Promise<Task> {
-    this.tasks.push(task);
-    return Promise.resolve(task);
+    let id = Math.floor(Math.random() * 101);
+    const newTask = new Task(id, task.name, task.description);
+    this.tasks.push(newTask);
+    return Promise.resolve(newTask);
   }
 
   deleteTask(id: number): Promise<void> {
