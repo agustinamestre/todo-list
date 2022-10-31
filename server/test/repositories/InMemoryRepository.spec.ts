@@ -9,7 +9,7 @@ describe("InMemoryRepository", () => {
   let now: sinon.SinonFakeTimers;
 
   beforeEach(() => {
-    now = sinon.useFakeTimers(new Date("2015-03-25").getTime())
+    now = sinon.useFakeTimers(new Date("2015-03-25").getTime());
     inMemoryTaskRepository = new InMemoryTaskRepository();
   });
 
@@ -29,9 +29,7 @@ describe("InMemoryRepository", () => {
   });
 
   it("should delete a task by id", async () => {
-    const expectedTasks = [
-      new Task(1, "Ejercicio", "Ir la gimnasio"),
-    ];
+    const expectedTasks = [new Task(1, "Ejercicio", "Ir la gimnasio")];
 
     await inMemoryTaskRepository.deleteTask(0);
 
@@ -41,11 +39,16 @@ describe("InMemoryRepository", () => {
   });
 
   it("should create a task", async () => {
-    const expectedNewTask = new Task(2, "?", "??");
+    let id = Math.floor(Math.random() * 101);
 
     const actualNewTask = await inMemoryTaskRepository.saveTask(
-      expectedNewTask
+      new Task(id, "?", "??")
     );
+
+    let idExpected = actualNewTask.id;
+    
+    const expectedNewTask = new Task(idExpected, "?", "??");
+
     assert.deepStrictEqual(actualNewTask, expectedNewTask);
 
     const tasks = await inMemoryTaskRepository.getTasks();
@@ -54,11 +57,15 @@ describe("InMemoryRepository", () => {
   });
 
   it("should update a task", async () => {
-    const expectedNewTask = new Task(0, "?", "??");
+    const expectedUpdatedTask = new Task(0, "?", "??");
 
-    const actualNewTask = await inMemoryTaskRepository.updateTask(0, "?", "??");
+    const actualUpdatedTask = await inMemoryTaskRepository.updateTask(
+      0,
+      "?",
+      "??"
+    );
 
-    assert.deepStrictEqual(actualNewTask, expectedNewTask);
+    assert.deepStrictEqual(actualUpdatedTask, expectedUpdatedTask);
   });
 
   it("should trow an exeption when the updated task does not exist", async () => {
@@ -67,7 +74,7 @@ describe("InMemoryRepository", () => {
       assert.fail();
     } catch (error: any) {
       assert(error instanceof Error);
-      assert.equal(error.message, "No se encontro la tarea con id 7");
+      assert.equal(error.message, "Id not found");
     }
   });
 });
