@@ -4,7 +4,7 @@ import { assert } from "chai";
 import sinon, { stubInterface } from "ts-sinon";
 import Task from "../../app/models/Task";
 
-describe.only("TaskService", () => {
+describe("TaskService", () => {
   let now: sinon.SinonFakeTimers;
 
   let getTaskStub: sinon.SinonStub<[], Promise<Task[]>>;
@@ -13,18 +13,12 @@ describe.only("TaskService", () => {
 
   const taskService = new TaskService(taskRepositoryStub);
 
-  taskRepositoryStub.deleteTask.resolves();
-
-  //no entiendo esto, no se como ponerlo en palabras
-
   beforeEach(() => {
     now = sinon.useFakeTimers(new Date("2015-03-25").getTime());
 
-    
-
     getTaskStub = taskRepositoryStub.getTasks.resolves([
-      new Task(0, "aaa", "aaaa"),
-      new Task(1, "jjjjj", "jjjj"),
+      new Task(2, "aaa", "aaaa"),
+      new Task(3, "jjjjj", "jjjj"),
     ]);
   });
 
@@ -37,13 +31,17 @@ describe.only("TaskService", () => {
       new Task(2, "aaa", "aaaa"),
       new Task(3, "jjjjj", "jjjj"),
     ];
+    
     const actualTasks = await taskService.getTasks();
 
     sinon.assert.calledOnce(getTaskStub);
     assert.deepStrictEqual(actualTasks, expectedTasks);
+
   });
 
   it("should delete task by id", async () => {
+    taskRepositoryStub.deleteTask.resolves();
+
     await taskService.deleteTask(2);
 
     sinon.assert.calledOnceWithExactly(taskRepositoryStub.deleteTask, 2);
@@ -64,7 +62,7 @@ describe.only("TaskService", () => {
     sinon.assert.calledOnceWithExactly(taskRepositoryStub.saveTask, new Task(null, name, description));
   });
 
-  it.only("should update a task", async () => {
+  it("should update a task", async () => {
     const id = 0;
     const name = "hi";
     const description = "test"
