@@ -2,7 +2,7 @@ import TaskService from "../services/TaskService";
 import * as express from "express";
 import IController from "./IController";
 
-class TaskController implements IController {
+export default class TaskController implements IController {
   public readonly path = "/tasks";
   public readonly router = express.Router();
 
@@ -13,7 +13,7 @@ class TaskController implements IController {
     this.router.put("/:id", this.updateTask);
   }
 
-  getTasks = async (request: express.Request, response: express.Response) => {
+  getTasks = async (response: express.Response) => {
     response.send(await this.taskService.getTasks());
   };
 
@@ -24,14 +24,23 @@ class TaskController implements IController {
 
   deleteTask = async (request: express.Request, response: express.Response) => {
     const id = +request.params.id;
-    response.send(await this.taskService.deleteTask(id));
+
+    try {
+      const task = await this.taskService.deleteTask(id);
+      response.send(task);
+    } catch (err: any) {
+      response.status(404).json({ message: err.message });
+    }
   };
 
   updateTask = async (request: express.Request, response: express.Response) => {
     const id = +request.params.id;
     const { name, description } = request.body;
-    response.send(await this.taskService.updateTask(id, name, description));
+    try {
+      const task = await this.taskService.updateTask(id, name, description);
+      response.send(task);
+    } catch (err: any) {
+      response.status(404).json({ message: err.message });
+    }
   };
 }
-
-export default TaskController;

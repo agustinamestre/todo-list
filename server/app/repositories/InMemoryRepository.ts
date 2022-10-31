@@ -20,6 +20,11 @@ export default class InMemoryTaskRepository implements TaskRepository {
 
   deleteTask(id: number): Promise<void> {
     const index = this.tasks.findIndex((e) => e.id === id);
+    
+    if(index === -1){
+      throw new Error(`Id ${id} not found`)
+    }
+    
     this.tasks.splice(index, 1);
     return Promise.resolve()
   }
@@ -28,13 +33,11 @@ export default class InMemoryTaskRepository implements TaskRepository {
     const index = this.tasks.findIndex((e) => e.id === id);
 
     if(index === -1){
-      throw new Error(`No se encontro la tarea con id ${id}`)
+      throw new Error(`Id ${id} not found`)
     }
 
     this.tasks[index].name = name;
     this.tasks[index].description = description;
     return Promise.resolve(this.tasks[index]);
-
-    return Promise.resolve(this.tasks[0])
   }
 }
