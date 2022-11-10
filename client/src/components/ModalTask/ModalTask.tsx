@@ -1,10 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import "./ModalTask.css";
 import TaskModel from "../../TaskModel";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+import {
+  setButtonName,
+  setName,
+  setDescription,
+} from "../../store/slices/modal/modal";
 
 const style = {
   position: "absolute" as "absolute",
@@ -28,21 +35,23 @@ interface ModalProps {
 }
 
 export default function ModalTask(props: ModalProps) {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [buttonName, setButtonName] = useState("");
+  const { buttonName } = useSelector((state: RootState) => state.modal);
+  const { name } = useSelector((state: RootState) => state.modal);
+  const { description } = useSelector((state: RootState) => state.modal);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (props.isModalOpen) {
       if (props.task === undefined) {
-        setButtonName("Create");
+        dispatch(setButtonName("Create"));
       } else {
-        setButtonName("Edit");
-        setName(props.task.name);
-        setDescription(props.task.description);
+        dispatch(setButtonName("Edit"));
+        dispatch(setName(props.task.name));
+        dispatch(setDescription(props.task.description));
       }
     }
-  }, [props.isModalOpen, props.task]);
+  }, [dispatch, props.isModalOpen, props.task]);
 
   const handleClose = () => {
     props.onModalClose();
@@ -51,12 +60,12 @@ export default function ModalTask(props: ModalProps) {
 
   const handleNameChange = (event: InputEvent) => {
     let name = event.target.value;
-    setName(name);
+    dispatch(setName(name));
   };
 
   const handleDescriptionChange = (event: InputEvent) => {
     let description = event.target.value;
-    setDescription(description);
+    dispatch(setDescription(description));
   };
 
   const handleTask = () => {
@@ -66,8 +75,8 @@ export default function ModalTask(props: ModalProps) {
   };
 
   const clear = () => {
-    setName("");
-    setDescription("");
+    dispatch(setName(""));
+    dispatch(setDescription(""));
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { Typography } from "@material-ui/core";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -8,34 +8,33 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import TaskModel from "../TaskModel";
 import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
 import Config from "../config.json";
-
+import { RootState } from "../store";
+import { setTasks, setcurrentTask } from "../store/slices/tasks/tasksSlice";
+import { setOpen } from "../store/slices/modal/modal";
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
-  const baseURL= Config.BASE_URL
+  const baseURL = Config.BASE_URL;
 
-  const [currentTask, setCurrentTask] = useState<TaskModel>();
-  const [open, setOpen] = useState(false);
-  const [tasks, setTasks] = useState([
-    {
-      id: 0,
-      name: "Practicar react",
-      description: "avanzar con la todo list",
-    },
-  ]);
+  const { initialTasksState } = useSelector((state: RootState) => state.tasks);
+  const { currentTask } = useSelector((state: RootState) => state.tasks);
+  const { open } = useSelector((state: RootState) => state.modal);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     try {
       fetch(`${baseURL}/tasks/`)
         .then((response) => response.json())
-        .then((tasks) => setTasks(tasks));
+        .then((tasks) => dispatch(setTasks(tasks)));
     } catch (error) {
       console.error(error);
     }
-  }, [baseURL]);
+  }, [baseURL, dispatch]);
 
   const handleTask = (name: string, description: string) => {
     if (name === "") {
-      setOpen(false);
+      dispatch(setOpen(false));
     } else {
       if (currentTask === undefined) {
         try {
@@ -50,8 +49,8 @@ function App() {
             .then((response) => response.json())
             .then((data) => {
               if (data) {
-                let newArray = [...tasks, data];
-                setTasks(newArray);
+                let newArray = [...initialTasksState, data];
+                dispatch(setTasks(newArray));
               }
             });
         } catch (error) {
@@ -74,11 +73,11 @@ function App() {
             .then((response) => response.json())
             .then((data) => {
               if (data) {
-                let newArray = [...tasks];
-                const index = tasks.findIndex((e) => e.id === id);
+                let newArray = [...initialTasksState];
+                const index = newArray.findIndex((e) => e.id === id);
                 newArray[index].name = name;
                 newArray[index].description = description;
-                setTasks(newArray);
+                dispatch(setTasks(newArray));
               }
             });
         } catch (error) {
@@ -89,8 +88,8 @@ function App() {
   };
 
   const handleEditTask = (task: TaskModel) => {
-    setOpen(true);
-    setCurrentTask(task);
+    dispatch(setOpen(true));
+    dispatch(setcurrentTask(task));
   };
 
   const handleDeleteTask = (id: number) => {
@@ -99,8 +98,10 @@ function App() {
         method: "DELETE",
       }).then((data) => {
         if (data) {
-          let newArrayTasks = tasks.filter((task) => task.id !== id);
-          setTasks(newArrayTasks);
+          let newArrayTasks = initialTasksState.filter(
+            (task) => task.id !== id
+          );
+          dispatch(setTasks(newArrayTasks));
         }
       });
     } catch (error) {
@@ -109,12 +110,12 @@ function App() {
   };
 
   const handleModalClose = () => {
-    setOpen(false);
-    setCurrentTask(undefined);
+    dispatch(setOpen(false));
+    dispatch(setcurrentTask(undefined));
   };
 
   const modalOpen = () => {
-    setOpen(true);
+    dispatch(setOpen(true));
   };
 
   return (
@@ -133,7 +134,7 @@ function App() {
           <svg data-testid="AddCircleOutlineIcon"> </svg>{" "}
         </AddCircleOutlineIcon>
         <TaskList
-          taskArray={tasks}
+          taskArray={initialTasksState}
           deleteTask={handleDeleteTask}
           editTask={handleEditTask}
         />

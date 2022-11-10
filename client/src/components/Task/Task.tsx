@@ -1,4 +1,3 @@
-import React from "react";
 import { Box } from "@material-ui/core";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -12,8 +11,7 @@ interface TaskProps {
 }
 
 export default function Task(props: TaskProps) {
-  
-  const { name, id, } = props.task;
+  const { name, id } = props.task;
 
   const deleteTask = () => {
     props.deleteTask(id!);
@@ -23,7 +21,6 @@ export default function Task(props: TaskProps) {
     props.editTask(props.task);
   };
 
-  
   return (
     <div id="container-task">
       <Box
