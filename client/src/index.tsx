@@ -3,10 +3,15 @@ import {render} from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import 'typeface-roboto';
 import App from './containers/App';
+import { Provider } from "react-redux";
+import { store } from "./store/";
+
 
 render(
   <React.StrictMode>
+    <Provider store={store}>
     <App />
+    </Provider>
   </React.StrictMode>,  document.getElementById("root")
 );
 
